@@ -12,7 +12,7 @@ databases:
   diskSizeGB: 1
 services:
 - type: web
-  name: gicc-events
+  name: giccevents-ie
   runtime: docker
   repo: https://github.com/HiEventsDev/hi.events-render.com
   plan: starter

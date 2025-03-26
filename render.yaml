@@ -1,0 +1,45 @@
+# Exported from Render on 2025-03-26T13:58:28Z
+databases:
+- name: hi-events-db
+  databaseName: hi_events_db_ma5e
+  user: hi_events_db_ma5e_user
+  plan: basic-256mb
+  region: frankfurt
+  ipAllowList:
+  - source: 0.0.0.0/0
+    description: everywhere
+  postgresMajorVersion: "16"
+  diskSizeGB: 1
+services:
+- type: web
+  name: gicc-events
+  runtime: docker
+  repo: https://github.com/HiEventsDev/hi.events-render.com
+  plan: starter
+  envVars:
+  - key: MAIL_MAILER
+    sync: false
+  - key: FILESYSTEM_PRIVATE_DISK
+    sync: false
+  - key: FILESYSTEM_PUBLIC_DISK
+    sync: false
+  - key: QUEUE_CONNECTION
+    sync: false
+  - key: LOG_CHANNEL
+    sync: false
+  - key: JWT_SECRET
+    sync: false
+  - key: APP_KEY
+    sync: false
+  - key: DATABASE_URL
+    fromDatabase:
+      name: hi-events-db
+      property: connectionString
+  - key: PORT
+    sync: false
+  - fromGroup: hi_events
+  region: frankfurt
+  dockerContext: .
+  dockerfilePath: ./Dockerfile
+  autoDeploy: false
+version: "1"
